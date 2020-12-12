@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.myclass.constant.AttributeConstant;
 import com.myclass.dbconnection.MySqlConnection;
 import com.myclass.entity.Role;
 import com.myclass.entity.Status;
@@ -37,7 +38,7 @@ public class StatusRepository implements IStatusRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return statusList;
 	}

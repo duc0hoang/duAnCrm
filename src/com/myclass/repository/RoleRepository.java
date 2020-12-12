@@ -38,7 +38,7 @@ public class RoleRepository implements IRoleRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return roleList;
 	}
@@ -59,7 +59,7 @@ public class RoleRepository implements IRoleRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 
@@ -84,7 +84,7 @@ public class RoleRepository implements IRoleRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return null;
 	}
@@ -107,7 +107,7 @@ public class RoleRepository implements IRoleRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 
@@ -129,7 +129,7 @@ public class RoleRepository implements IRoleRepository{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 

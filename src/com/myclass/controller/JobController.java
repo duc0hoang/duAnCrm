@@ -1,6 +1,7 @@
 package com.myclass.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +15,10 @@ import com.myclass.constant.AttributeConstant;
 import com.myclass.constant.UrlConstant;
 import com.myclass.constant.ViewConstant;
 import com.myclass.entity.Job;
+import com.myclass.entity.Task;
 import com.myclass.service.IJobService;
 import com.myclass.service.ITaskService;
+import com.myclass.service.IUserService;
 @WebServlet(urlPatterns = {
 		UrlConstant.URL_JOB,
 		UrlConstant.URL_JOB_ADD,
@@ -26,6 +29,7 @@ import com.myclass.service.ITaskService;
 public class JobController extends HttpServlet{
 	IJobService jobService;
 	ITaskService taskService;
+	IUserService userService;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,6 +38,7 @@ public class JobController extends HttpServlet{
 		
 		jobService		= (IJobService) context.getBean(AttributeConstant.JOB_SERVICE);
 		taskService 	= (ITaskService) context.getBean(AttributeConstant.TASK_SERVICE);
+		userService 	= (IUserService) context.getBean(AttributeConstant.USER_SERVICE);
 		
 		switch (path) {
 		case UrlConstant.URL_JOB:
@@ -58,10 +63,20 @@ public class JobController extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + UrlConstant.URL_JOB);
 			break;
 		case UrlConstant.URL_JOB_DETAILS:
+			if(req.getParameter(AttributeConstant.ID) == null) {
+				resp.sendRedirect(req.getContextPath() + UrlConstant.URL_JOB);
+				break;
+			}
 			
-			req.setAttribute(AttributeConstant.TASK_LIST, taskService.getAllTaskOfJobId(Integer.parseInt(req.getParameter(AttributeConstant.ID))));
+			List<Task> taskListWithJobId = taskService.getAllTaskOfJobId(Integer.parseInt(req.getParameter(AttributeConstant.ID)));
 			
-//			req.setAttribute(AttributeConstant.STATUS_LIST, statusService.getAllStatus());
+			req.setAttribute(AttributeConstant.TASK_LIST, taskListWithJobId);
+			
+			req.setAttribute(AttributeConstant.TASK_CHUA_BAT_DAU, taskService.getNumberOfStatus(taskListWithJobId,1));
+			req.setAttribute(AttributeConstant.TASK_DANG_THUC_HIEN, taskService.getNumberOfStatus(taskListWithJobId,2));
+			req.setAttribute(AttributeConstant.TASK_DA_HOAN_THANH, taskService.getNumberOfStatus(taskListWithJobId,3));
+			
+			req.setAttribute(AttributeConstant.USER_DTO_LIST, userService.getUserDtoOnTaskList(taskListWithJobId));
 			
 			req.getRequestDispatcher(ViewConstant.VIEWS_JOB_DETAIL).forward(req, resp);
 			break;

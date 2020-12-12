@@ -1,6 +1,7 @@
 package com.myclass.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import com.myclass.constant.AttributeConstant;
 import com.myclass.constant.UrlConstant;
 import com.myclass.constant.ViewConstant;
+import com.myclass.entity.Task;
 import com.myclass.entity.User;
 import com.myclass.service.IRoleService;
 import com.myclass.service.IStatusService;
@@ -44,6 +46,22 @@ public class UserController extends HttpServlet{
 		statusService 	= (IStatusService) context.getBean(AttributeConstant.STATUS_SERVICE);
 		
 		switch (path) {
+		case UrlConstant.URL_USER_DETAILS:
+			if(req.getParameter(AttributeConstant.ID) == null) {
+				resp.sendRedirect(req.getContextPath() + UrlConstant.URL_USER);
+				break;
+			}
+			req.setAttribute(AttributeConstant.USER, userService.getUserById(Integer.parseInt(req.getParameter(AttributeConstant.ID))));
+			
+			List<Task> taskListWithUserId = taskService.getAllTaskOfUserId(Integer.parseInt(req.getParameter(AttributeConstant.ID)));
+			req.setAttribute(AttributeConstant.TASK_LIST, taskListWithUserId);
+			
+			req.setAttribute(AttributeConstant.TASK_CHUA_BAT_DAU, taskService.getNumberOfStatus(taskListWithUserId,1));
+			req.setAttribute(AttributeConstant.TASK_DANG_THUC_HIEN, taskService.getNumberOfStatus(taskListWithUserId,2));
+			req.setAttribute(AttributeConstant.TASK_DA_HOAN_THANH, taskService.getNumberOfStatus(taskListWithUserId,3));
+			
+			req.getRequestDispatcher(ViewConstant.VIEWS_USER_DETAIL).forward(req, resp);
+			break;
 		case UrlConstant.URL_USER:
 			
 			req.setAttribute(AttributeConstant.USER_DTO_LIST, userService.getAllUserDto());
@@ -69,14 +87,6 @@ public class UserController extends HttpServlet{
 			userService.removeUserById(Integer.parseInt(req.getParameter(AttributeConstant.ID)));
 			
 			resp.sendRedirect(req.getContextPath() + UrlConstant.URL_USER);
-			break;
-		case UrlConstant.URL_USER_DETAILS:
-			
-			req.setAttribute(AttributeConstant.TASK_LIST, taskService.getAllTaskOfUserId(Integer.parseInt(req.getParameter(AttributeConstant.ID))));
-			
-			req.setAttribute(AttributeConstant.STATUS_LIST, statusService.getAllStatus());
-			
-			req.getRequestDispatcher(ViewConstant.VIEWS_USER_DETAIL).forward(req, resp);
 			break;
 		default:
 			break;

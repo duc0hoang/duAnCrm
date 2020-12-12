@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%	String contextPath = request.getContextPath(); %>
+     <%@ page import="com.myclass.constant.UrlConstant" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,10 +17,10 @@
     <div class="col-md-5 m-auto mt-5">
       <h3 class="text-center">ĐĂNG NHẬP HỆ THỐNG</h3>
       <div class="p-4 border mt-4">
-        <form action="/action_page.php">
+        <form method="post" action="<%= contextPath + UrlConstant.URL_LOGIN %>">
             <div class="form-group">
               <label>Email</label>
-              <input type="email" class="form-control" name="email">
+              <input type="text" class="form-control" name="email">
             </div>
             <div class="form-group">
               <label>Mật khẩu</label>

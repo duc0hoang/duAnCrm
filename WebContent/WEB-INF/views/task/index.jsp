@@ -81,10 +81,10 @@
 					                        <tr>
 					                        	<td><%= taskDto.getId() %></td>
 					                        	<td><%= taskDto.getName() %></td>
+					                        	<td><%= taskDto.getJobName() %></td>
+					                        	<td><%= taskDto.getUserFullname() %></td>
 					                        	<td><%= taskDto.getStartDate() %></td>
 					                        	<td><%= taskDto.getEndDate() %></td>
-					                        	<td><%= taskDto.getUserFullname() %></td>
-					                        	<td><%= taskDto.getJobName() %></td>
 					                        	<td><%= taskDto.getStatusName() %></td>
 					                        	<td>
 					                                <a href="<%= contextPath %>/task/edit?id=<%= taskDto.getId() %>" class="btn btn-sm btn-primary">Sửa</a>

@@ -19,6 +19,7 @@ public class AttributeConstant {
 	public static final String 	DESCRIPTION			= "description";
 	public static final String 	JOB 				= "job";
 	public static final String 	TASK 				= "task";
+	public static final String 	MESSAGE 			= "message";
 	
 	public static final String 	CONTEXT				= "context";
 	public static final String 	USER_SERVICE		= "userService";
@@ -26,15 +27,25 @@ public class AttributeConstant {
 	public static final String 	TASK_SERVICE 		= "taskService";
 	public static final String 	STATUS_SERVICE 		= "statusService";
 	public static final String 	JOB_SERVICE 		= "jobService";
+	public static final String 	AUTH_SERVICE 		= "authService";
 	
 	public static final String 	START_DATE 			= "start_date";
 	public static final String 	END_DATE 			= "end_date";
 	public static final String 	USER_ID 			= "user_id";
 	public static final String 	JOB_ID 				= "job_id";
 	public static final String 	STATUS_ID 			= "status_id";
+	public static final String 	TASK_CHUA_BAT_DAU	= "chuaBatDau";
+	public static final String 	TASK_DANG_THUC_HIEN = "dangThucHien";
+	public static final String 	TASK_DA_HOAN_THANH 	= "daHoanThanh";
 	
+	public static final String 	SESSION_LOGIN 		= "userLogin";
+	public static final String 	MESSAGE_LOGIN_FALSE = "Email hoac mat khau khong chinh xac!";
+	public static final String 	USER_LOGIN_DTO 		= "userLoginDto";
 	
+	public static final String 	ROLENAME_ADMIN 		= "ROLE_ADMIN";
+	public static final String 	ROLENAME_MANAGER	= "ROLE_MANAGER";
 	
+	public static final String 	ERROR				= "error";
 	
 	
 }

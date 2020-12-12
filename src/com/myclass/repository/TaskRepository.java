@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.myclass.constant.AttributeConstant;
 import com.myclass.dbconnection.MySqlConnection;
 import com.myclass.dto.TaskDto;
 import com.myclass.entity.Job;
@@ -16,13 +17,13 @@ import com.myclass.entity.User;
 
 @Component
 public class TaskRepository implements ITaskRepository{
-	List<Task> taskListWithUserId, taskListWithJobId;
+	List<Task> taskListWithUserId, taskListWithJobId, allTask;
 	List<TaskDto> taskDtoList;
 	
-	public TaskRepository(List<Task> taskListWithUserId,List<Task> taskListWithJobId,List<TaskDto> taskDtoList) {
-		this.taskDtoList = taskDtoList;
+	public TaskRepository(List<Task> taskListWithUserId,List<Task> taskListWithJobId,List<TaskDto> taskDtoList,List<Task> allTask) {
 		this.taskListWithJobId = taskListWithJobId;
 		this.taskListWithUserId = taskListWithUserId;
+		this.allTask = allTask;
 	}
 
 	@Override
@@ -37,15 +38,15 @@ public class TaskRepository implements ITaskRepository{
 			ResultSet result = statement.executeQuery();
 			
 			while (result.next()) {
-				Task task = new Task(result.getInt("id"),result.getString("name"),
-						result.getString("start_date"),result.getString("end_date"),
-						result.getInt("user_id"),result.getInt("job_id"),result.getInt("status_id"));
+				Task task = new Task(result.getInt(AttributeConstant.ID),result.getString(AttributeConstant.NAME),
+						result.getString(AttributeConstant.START_DATE),result.getString(AttributeConstant.END_DATE),
+						result.getInt(AttributeConstant.USER_ID),result.getInt(AttributeConstant.JOB_ID),result.getInt(AttributeConstant.STATUS_ID));
 				
 				taskListWithUserId.add(task);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return taskListWithUserId;
 	}
@@ -62,15 +63,15 @@ public class TaskRepository implements ITaskRepository{
 			ResultSet result = statement.executeQuery();
 			
 			while (result.next()) {
-				Task task = new Task(result.getInt("id"),result.getString("name"),
-						result.getString("start_date"),result.getString("end_date"),
-						result.getInt("user_id"),result.getInt("job_id"),result.getInt("status_id"));
+				Task task = new Task(result.getInt(AttributeConstant.ID),result.getString(AttributeConstant.NAME),
+						result.getString(AttributeConstant.START_DATE),result.getString(AttributeConstant.END_DATE),
+						result.getInt(AttributeConstant.USER_ID),result.getInt(AttributeConstant.JOB_ID),result.getInt(AttributeConstant.STATUS_ID));
 				
 				taskListWithJobId.add(task);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return taskListWithJobId;
 	}
@@ -83,6 +84,8 @@ public class TaskRepository implements ITaskRepository{
 			PreparedStatement statement = connection.prepareStatement(query);
 			
 			ResultSet result = statement.executeQuery();
+			
+			taskDtoList = new ArrayList<TaskDto>();
 			
 			while (result.next()) {
 				TaskDto taskDto = new TaskDto();
@@ -99,7 +102,7 @@ public class TaskRepository implements ITaskRepository{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return taskDtoList;
 	}
@@ -120,7 +123,7 @@ public class TaskRepository implements ITaskRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 
@@ -144,7 +147,7 @@ public class TaskRepository implements ITaskRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return null;
 	}
@@ -170,7 +173,7 @@ public class TaskRepository implements ITaskRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 
@@ -196,8 +199,65 @@ public class TaskRepository implements ITaskRepository{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
+	}
+
+	@Override
+	public List<Task> getAllTask() {
+		try {
+			String query = "SELECT * FROM tasks";
+			Connection connection = MySqlConnection.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query);
+			
+			ResultSet result = statement.executeQuery();
+			
+			while (result.next()) {
+				Task task = new Task(result.getInt("id"),result.getString("name"),
+						result.getString("start_date"),result.getString("end_date"),
+						result.getInt("user_id"),result.getInt("job_id"),result.getInt("status_id"));
+				
+				allTask.add(task);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
+		}
+		return allTask;
+	}
+
+	@Override
+	public List<TaskDto> getAllTaskDtoOfUserId(int id) {
+		try {
+			String query = "SELECT t.id, t.name, t.start_date, t.end_date, u.fullname, j.name, s.name, s.id FROM tasks t left join users u on t.user_id = u.id left join jobs j on t.job_id = j.id left join status s on t.status_id = s.id WHERE u.id = ?";
+			Connection connection = MySqlConnection.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query);
+			
+			statement.setInt(1, id);
+			
+			ResultSet result = statement.executeQuery();
+			
+			taskDtoList = new ArrayList<TaskDto>();
+			
+			while (result.next()) {
+				TaskDto taskDto = new TaskDto();
+				taskDto.setId(result.getInt(1));
+				taskDto.setName(result.getString(2));
+				taskDto.setStartDate(result.getString(3));
+				taskDto.setEndDate(result.getString(4));
+				taskDto.setUserFullname(result.getString(5));
+				taskDto.setJobName(result.getString(6));
+				taskDto.setStatusName(result.getString(7));
+				taskDto.setStatusId(result.getInt(8));
+				
+				taskDtoList.add(taskDto);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
+		}
+		return taskDtoList;
 	}
 
 }

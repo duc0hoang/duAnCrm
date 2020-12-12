@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.myclass.constant.AttributeConstant;
 import com.myclass.dbconnection.MySqlConnection;
 import com.myclass.dto.UserDto;
 import com.myclass.entity.User;
@@ -29,16 +30,16 @@ public class UserRepository implements IUserRepository{
 			
 			while (result.next()) {
 				UserDto userDto = new UserDto();
-				userDto.setId(result.getInt("id"));
-				userDto.setEmail(result.getString("email"));
-				userDto.setFullname(result.getString("fullname"));
-				userDto.setRoleDescription(result.getString("description"));
+				userDto.setId(result.getInt(AttributeConstant.ID));
+				userDto.setEmail(result.getString(AttributeConstant.EMAIL));
+				userDto.setFullname(result.getString(AttributeConstant.FULLNAME));
+				userDto.setRoleDescription(result.getString(AttributeConstant.DESCRIPTION));
 				
 				userDtoList.add(userDto);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return userDtoList;
 	}
@@ -56,12 +57,12 @@ public class UserRepository implements IUserRepository{
 			
 			if(result.next()) {
 				User user = new User();
-				user.setId(result.getInt("id"));
-				user.setEmail(result.getString("email"));
-				user.setPassword(result.getString("password"));
-				user.setFullname(result.getString("fullname"));
-				user.setAvatar(result.getString("avatar"));
-				user.setRole_id(result.getInt("role_id"));
+				user.setId(result.getInt(AttributeConstant.ID));
+				user.setEmail(result.getString(AttributeConstant.EMAIL));
+				user.setPassword(result.getString(AttributeConstant.PASSWORD));
+				user.setFullname(result.getString(AttributeConstant.FULLNAME));
+				user.setAvatar(result.getString(AttributeConstant.AVATAR));
+				user.setRole_id(result.getInt(AttributeConstant.ROLE_ID));
 				
 				return user;
 			}
@@ -88,7 +89,7 @@ public class UserRepository implements IUserRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 
@@ -110,7 +111,7 @@ public class UserRepository implements IUserRepository{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 
@@ -134,7 +135,7 @@ public class UserRepository implements IUserRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 

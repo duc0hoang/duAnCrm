@@ -21,4 +21,12 @@ public interface ITaskService {
 
 	void updateTaskById(Task task, int parseInt);
 
+	int getNumberOfStatus(List<Task> taskListWithUserId, int statusId);
+
+	List<Task> getAllTask();
+
+	List<TaskDto> getAllTaskDtoOfUserId(int id);
+
+	int getNumberOfStatusWithTaskDto(List<TaskDto> taskDtoListWithUserId, int statusId);
+
 }

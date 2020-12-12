@@ -3,6 +3,7 @@ package com.myclass.service;
 import java.util.List;
 
 import com.myclass.dto.UserDto;
+import com.myclass.entity.Task;
 import com.myclass.entity.User;
 
 public interface IUserService {
@@ -15,5 +16,7 @@ public interface IUserService {
 	void updateUserById(User user, int id);
 
 	void addNewUser(User user);
+
+	List<UserDto> getUserDtoOnTaskList(List<Task> taskListWithJobId);
 
 }

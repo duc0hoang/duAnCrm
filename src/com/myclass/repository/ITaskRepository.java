@@ -21,4 +21,8 @@ public interface ITaskRepository {
 
 	void updateTaskById(Task task, int id);
 
+	List<Task> getAllTask();
+
+	List<TaskDto> getAllTaskDtoOfUserId(int id);
+
 }

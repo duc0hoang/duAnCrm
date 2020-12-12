@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class TaskDto {
 	private int id;
+	private int statusId;
 	private String name;
 	private String startDate;
 	private String endDate;
@@ -52,5 +53,11 @@ public class TaskDto {
 	}
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+	public int getStatusId() {
+		return statusId;
+	}
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 }

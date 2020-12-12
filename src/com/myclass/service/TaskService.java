@@ -51,4 +51,34 @@ public class TaskService implements ITaskService{
 		taskRepository.updateTaskById(task,id);
 	}
 
+	@Override
+	public int getNumberOfStatus(List<Task> taskListWithUserId, int statusId) {
+		int result = 0;
+		for (Task task : taskListWithUserId) {
+			if (task.getStatusId() == statusId)
+				result++;
+		}
+		return result;
+	}
+
+	@Override
+	public List<Task> getAllTask() {
+		return taskRepository.getAllTask();
+	}
+
+	@Override
+	public List<TaskDto> getAllTaskDtoOfUserId(int id) {
+		return taskRepository.getAllTaskDtoOfUserId(id);
+	}
+
+	@Override
+	public int getNumberOfStatusWithTaskDto(List<TaskDto> taskDtoListWithUserId, int statusId) {
+		int result = 0;
+		for (TaskDto taskDto : taskDtoListWithUserId) {
+			if (taskDto.getStatusId() == statusId)
+				result++;
+		}
+		return result;
+	}
+
 }

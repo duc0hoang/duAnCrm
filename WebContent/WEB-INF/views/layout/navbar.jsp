@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%	String contextPath = request.getContextPath(); %>
+<%@ page import="com.myclass.dto.UserLoginDto"%>
+<%
+String contextPath = request.getContextPath(); 
+UserLoginDto userLoginDto = (UserLoginDto) request.getSession().getAttribute("userLoginDto");
+%>
 <nav class="navbar navbar-default navbar-static-top m-b-0">
 	<div class="navbar-header">
 		<a class="navbar-toggle hidden-sm hidden-md hidden-lg "
@@ -36,10 +40,10 @@
 						class="hidden-xs">Cybersoft</b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="profile.html">Thông tin cá nhân</a></li>
-						<li><a href="#">Thống kê công việc</a></li>
+						<li><a href="<%=contextPath%>/profile">Thông tin cá nhân</a></li>
+						<li><a href="<%=contextPath%>/profile/task?id=<%= userLoginDto.getId()%>">Thống kê công việc</a></li>
 						<li class="divider"></li>
-						<li><a href="#">Đăng xuất</a></li>
+						<li><a href="<%=contextPath%>/logout">Đăng xuất</a></li>
 					</ul>
 				</div>
 			</li>

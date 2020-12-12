@@ -40,7 +40,7 @@ public class JobRepository implements IJobRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return jobList;
 	}
@@ -67,7 +67,7 @@ public class JobRepository implements IJobRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 		return null;
 	}
@@ -88,7 +88,7 @@ public class JobRepository implements IJobRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 
@@ -110,7 +110,7 @@ public class JobRepository implements IJobRepository{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 
@@ -133,7 +133,7 @@ public class JobRepository implements IJobRepository{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
+			System.out.println(AttributeConstant.ERROR + e.getMessage());
 		}
 	}
 

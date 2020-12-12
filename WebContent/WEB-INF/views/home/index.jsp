@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%	String contextPath = request.getContextPath(); %>
+<%@ page import="com.myclass.entity.Task"%>
+<%@ page import="java.util.List" %>
+<% List<Task> taskList = (List<Task>) request.getAttribute("taskList"); 
+int chuaBatDau = (int) request.getAttribute("chuaBatDau"),
+dangThucHien = (int) request.getAttribute("dangThucHien"),
+daHoanThanh = (int) request.getAttribute("daHoanThanh");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,12 +74,12 @@
                                 <h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-danger">23</h3>
+                                <h3 class="counter text-right m-t-15 text-danger"><%= chuaBatDau %></h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40"
-                                        aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span
+                                        aria-valuemin="0" aria-valuemax="100" style="width: <%= chuaBatDau*100/taskList.size() %>%"> <span
                                             class="sr-only">40% Complete (success)</span> </div>
                                 </div>
                             </div>
@@ -89,12 +96,12 @@
                                 <h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-megna">169</h3>
+                                <h3 class="counter text-right m-t-15 text-megna"><%= dangThucHien %></h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40"
-                                        aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span
+                                        aria-valuemin="0" aria-valuemax="100" style="width: <%= dangThucHien*100/taskList.size() %>%"> <span
                                             class="sr-only">40% Complete (success)</span> </div>
                                 </div>
                             </div>
@@ -111,12 +118,12 @@
                                 <h5 class="text-muted vb">ĐÃ HOÀN THÀNH</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-primary">157</h3>
+                                <h3 class="counter text-right m-t-15 text-primary"><%= daHoanThanh %></h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40"
-                                        aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span
+                                        aria-valuemin="0" aria-valuemax="100" style="width: <%= daHoanThanh*100/taskList.size() %>%"> <span
                                             class="sr-only">40% Complete (success)</span> </div>
                                 </div>
                             </div>

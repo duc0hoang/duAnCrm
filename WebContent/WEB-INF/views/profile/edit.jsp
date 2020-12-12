@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%	String contextPath = request.getContextPath(); %>
+<%	String contextPath = request.getContextPath(); %>
+<%@ page import="com.myclass.constant.UrlConstant" %>
+<%@ page import="com.myclass.entity.Job"%>
+<%@ page import="com.myclass.entity.Task"%>
+<%@ page import="com.myclass.entity.Status"%>
+<%@ page import="com.myclass.dto.UserDto"%>
+<%@ page import="java.util.List" %>
+<% List<Job> jobList = (List<Job>) request.getAttribute("jobList"); %>
+<% List<UserDto> userDtoList = (List<UserDto>) request.getAttribute("userDtoList"); %>
+<% List<Status> statusList = (List<Status>) request.getAttribute("statusList"); %>
+<% Task task = (Task) request.getAttribute("task"); %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,14 +49,14 @@
         <!-- Navigation -->
         <jsp:include page="../layout/navbar.jsp"></jsp:include>
         <!-- Left navbar-header -->
-        <jsp:include page="../layout/sidebar.jsp"></jsp:include>
+       	<jsp:include page="../layout/sidebar.jsp"></jsp:include>
         <!-- Left navbar-header end -->
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Thêm mới công việc</h4>
+                        <h4 class="page-title">Cập nhật công việc</h4>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -55,45 +65,65 @@
                     <div class="col-md-2 col-12"></div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material">
+                            <form class="form-horizontal form-material" method="post" action="<%= contextPath + UrlConstant.URL_PROFILE_TASK_EDIT %>">
+                                <div class="form-group">
+						    	<input type="hidden" name="id" value="${task.id }" class="form-control" />
+						  		</div>
                                 <div class="form-group">
                                     <label class="col-md-12">Tên dự án</label>
                                     <div class="col-md-12">
-                                        <input type="text" readonly value="Dự án CRM" class="form-control form-control-line">
+                                        <select class="form-control form-control-line" name="job_id">
+                                            <% for(Job job : jobList){ %>
+			                        		<option value="<%= job.getId()%>" <%= job.getId() == task.getJobId() ? "Selected" : "" %>><%= job.getName() %></option>
+			                        		<%} %>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Tên công việc</label>
                                     <div class="col-md-12">
-                                        <input type="text" readonly value="Thiết kế database" class="form-control form-control-line">
+                                        <input type="text" value="${task.name}"
+                                            class="form-control form-control-line" name="name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Người thực hiện</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control form-control-line" name="user_id">
+                                            <% for(UserDto userDto : userDtoList){ %>
+			                        		<option value="<%= userDto.getId()%>" <%= userDto.getId() == task.getUserId() ? "Selected" : "" %>><%= userDto.getFullname() %></option>
+			                        		<%} %>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày bắt đầu</label>
                                     <div class="col-md-12">
-                                        <input type="text" readonly value="05-07/2020" class="form-control form-control-line"> 
+                                        <input type="text" value="${task.startDate}"
+                                            class="form-control form-control-line" name="start_date"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày kết thúc</label>
                                     <div class="col-md-12">
-                                        <input type="text" readonly value="17-07/2020" class="form-control form-control-line"> 
+                                        <input type="text" value="${task.endDate}"
+                                            class="form-control form-control-line" name="end_date"> 
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Trạng thái</label>
+                                    <label class="col-md-12">Trạng Thái</label>
                                     <div class="col-md-12">
-                                        <select class="form-control form-control-line">
-                                            <option>Chưa thực hiện</option>
-                                            <option selected>Đang thực hiện</option>
-                                            <option>Đã hoàn thành</option>
+                                        <select class="form-control form-control-line" name="status_id">
+                                            <% for(Status status : statusList){ %>
+			                        		<option value="<%= status.getId()%>" <%= status.getId() == task.getStatusId() ? "Selected" : "" %>><%= status.getName() %></option>
+			                        		<%} %>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-success">Lưu lại</button>
-                                        <a href="profile.html" class="btn btn-primary">Quay lại</a>
+                                        <a href="<%= contextPath + UrlConstant.URL_PROFILE_TASK %>?id=<%= task.getUserId() %>" class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
                             </form>
